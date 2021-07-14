@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
+"""
+https//github.com/WieeRd/DrawClock
+"""
 from PIL import Image
+from io import BytesIO
 
 class DrawClock:
     def __init__(self, frame: Image.Image, h_hand: Image.Image, m_hand: Image.Image):
@@ -20,6 +24,11 @@ class DrawClock:
         base.paste(m_hand, (0,0), m_hand.convert('RGBA'))
 
         return base
+
+    def render(self, hour: int, minute: int, format='PNG') -> bytes:
+        buf = BytesIO()
+        self.draw(hour, minute).save(buf, format=format)
+        return buf.getvalue()
 
 if __name__=="__main__":
     frame = Image.open("./example/frame.png")
